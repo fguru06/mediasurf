@@ -1,0 +1,35 @@
+:root {
+	--bg-color: #f9f9f9;
+	--text-color: #333;
+	--secondary-text-color: #555;
+	--primary-color: #007bff;
+	--primary-color-hover: #0056b3;
+	--card-bg-color: #fff;
+	--shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+	--bg-color: #121212;
+	--text-color: #ffffff;
+	--secondary-text-color: #d1d1d1;
+	--primary-color: #00aaff;
+	--primary-color-hover: #0088cc;
+	--card-bg-color: #1e1e1e;
+	--shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+// Add more styles as needed
