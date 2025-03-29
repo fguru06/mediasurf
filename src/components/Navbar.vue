@@ -2,11 +2,7 @@
 	<nav class="navbar">
 		<div class="navbar-container">
 			<div class="navbar-brand">
-				<img
-					src="../assets/top-logo.jpg"
-					alt="Mediasurf Logo"
-					class="navbar-logo"
-				/>
+				<img :src="logoUrl" alt="Mediasurf Logo" class="navbar-logo" />
 				<span>Mediasurf</span>
 			</div>
 			<ul class="navbar-links">
@@ -91,6 +87,7 @@
 <script setup>
 	import { defineProps, ref, onMounted, onUnmounted } from "vue";
 	import { useRouter } from "vue-router";
+	import logoUrl from "/top-logo.JPG?url"; // Import the image URL
 
 	defineProps({
 		darkMode: Boolean,
