@@ -3,80 +3,82 @@
 		<div class="navbar-container">
 			<div class="navbar-brand">
 				<img :src="logoUrl" alt="Mediasurf Logo" class="navbar-logo" />
-				<span>Mediasurf</span>
 			</div>
-			<ul class="navbar-links">
-				<li>
-					<router-link
-						class="nav-link"
-						:class="{ active: activeSection === 'home' }"
-						to="/"
-						@click.native="scrollToTop"
-					>
-						Home
-					</router-link>
-				</li>
-				<li>
-					<a
-						class="nav-link"
-						:class="{ active: activeSection === 'services' }"
-						href="#services"
-						@click="scrollToSection('services')"
-					>
-						Services
-					</a>
-				</li>
-				<li>
-					<a
-						class="nav-link"
-						:class="{ active: activeSection === 'process' }"
-						href="#process"
-						@click="scrollToSection('process')"
-					>
-						Process
-					</a>
-				</li>
-				<li>
-					<a
-						class="nav-link"
-						:class="{ active: activeSection === 'portfolio' }"
-						href="#portfolio"
-						@click="scrollToSection('portfolio')"
-					>
-						Portfolio
-					</a>
-				</li>
-				<li>
-					<a
-						class="nav-link"
-						:class="{ active: activeSection === 'team' }"
-						href="#team"
-						@click="scrollToSection('team')"
-					>
-						Team
-					</a>
-				</li>
-				<li>
-					<router-link
-						class="nav-link"
-						:class="{ active: activeSection === 'courses' }"
-						to="/courses"
-						@click.native="setActiveSection('courses')"
-					>
-						Courses
-					</router-link>
-				</li>
-				<li>
-					<router-link
-						class="nav-link"
-						:class="{ active: activeSection === 'contact' }"
-						to="/contact"
-						@click.native="setActiveSection('contact')"
-					>
-						Contact
-					</router-link>
-				</li>
-			</ul>
+			<div class="navbar-menu">
+				<button @click="toggleMenu" class="menu-toggle">☰</button>
+				<ul :class="['navbar-links', { show: menuOpen }]">
+					<li>
+						<router-link
+							class="nav-link"
+							:class="{ active: activeSection === 'home' }"
+							to="/"
+							@click.native="scrollToTop"
+						>
+							Home
+						</router-link>
+					</li>
+					<li>
+						<a
+							class="nav-link"
+							:class="{ active: activeSection === 'services' }"
+							href="#services"
+							@click="scrollToSection('services')"
+						>
+							Services
+						</a>
+					</li>
+					<li>
+						<a
+							class="nav-link"
+							:class="{ active: activeSection === 'process' }"
+							href="#process"
+							@click="scrollToSection('process')"
+						>
+							Process
+						</a>
+					</li>
+					<li>
+						<a
+							class="nav-link"
+							:class="{ active: activeSection === 'portfolio' }"
+							href="#portfolio"
+							@click="scrollToSection('portfolio')"
+						>
+							Portfolio
+						</a>
+					</li>
+					<li>
+						<a
+							class="nav-link"
+							:class="{ active: activeSection === 'team' }"
+							href="#team"
+							@click="scrollToSection('team')"
+						>
+							Team
+						</a>
+					</li>
+					<li>
+						<router-link
+							class="nav-link"
+							:class="{ active: activeSection === 'courses' }"
+							to="/courses"
+							@click.native="setActiveSection('courses')"
+						>
+							Courses
+						</router-link>
+					</li>
+					<li>
+						<router-link
+							class="nav-link"
+							:class="{ active: activeSection === 'contact' }"
+							to="/contact"
+							@click.native="setActiveSection('contact')"
+						>
+							Contact
+						</router-link>
+					</li>
+				</ul>
+			</div>
 			<button @click="$emit('toggle-theme')" class="theme-toggle">
 				{{ darkMode ? "☀️" : "🌙" }}
 			</button>
@@ -95,6 +97,7 @@
 
 	const router = useRouter();
 	const activeSection = ref("home");
+	const menuOpen = ref(false);
 
 	const scrollToTop = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
@@ -146,6 +149,10 @@
 		}
 	};
 
+	const toggleMenu = () => {
+		menuOpen.value = !menuOpen.value;
+	};
+
 	onMounted(() => {
 		window.addEventListener("scroll", handleScroll);
 		handleScroll(); // Ensure the correct section is highlighted on load
@@ -168,7 +175,8 @@
 		.navbar-container {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: space-between; // Ensure space between logo and menu
+			flex-wrap: wrap; // Allow wrapping for smaller screens
 		}
 
 		.navbar-brand {
@@ -180,9 +188,34 @@
 			color: var(--text-color);
 
 			.navbar-logo {
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
+				width: 200px; // Adjust logo size for smaller screens
+				height: auto;
+				border-radius: 5px;
+				transition: transform 0.3s;
+
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
+		}
+
+		.navbar-menu {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-left: auto; // Push the menu to the right
+		}
+
+		.menu-toggle {
+			display: none;
+			background: none;
+			border: none;
+			font-size: 1.5rem;
+			cursor: pointer;
+			color: var(--text-color);
+
+			&:hover {
+				color: var(--primary-color);
 			}
 		}
 
@@ -214,25 +247,25 @@
 			}
 		}
 
-		.theme-toggle {
-			background: none;
-			border: none;
-			font-size: 1.5rem;
-			cursor: pointer;
-			color: var(--text-color);
-
-			&:hover {
-				color: var(--primary-color);
-			}
-		}
-
 		@media (max-width: 768px) {
 			.navbar-links {
-				display: none;
+				display: none; // Hide links by default in mobile view
+				flex-direction: column;
+				width: 100%;
+				background-color: var(--card-bg-color);
+				position: absolute;
+				top: 100%;
+				left: 0;
+				box-shadow: 0 2px 4px var(--shadow-color);
+				padding: 10px 0;
 			}
 
-			.navbar-container {
-				flex-wrap: wrap;
+			.navbar-links.show {
+				display: flex; // Show links when toggled
+			}
+
+			.menu-toggle {
+				display: block; // Show the menu toggle button in mobile view
 			}
 		}
 	}
