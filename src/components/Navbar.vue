@@ -89,7 +89,7 @@
 <script setup>
 	import { defineProps, ref, onMounted, onUnmounted } from "vue";
 	import { useRouter } from "vue-router";
-	import logoUrl from "/top-logo.JPG?url"; // Import the image URL
+	import logoUrl from "/Musa's_Made_Logo.png"; // Import the image URL
 
 	defineProps({
 		darkMode: Boolean,
