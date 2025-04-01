@@ -229,7 +229,7 @@
 			.nav-link {
 				text-decoration: none;
 				color: var(--text-color);
-				font-size: 1rem;
+				font-size: 1.125rem; // Updated font size
 				font-weight: 500;
 				padding: 5px 10px;
 				border-radius: 5px;

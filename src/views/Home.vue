@@ -629,7 +629,7 @@
 	.filter-btn {
 		background-color: #fff;
 		color: #007bff;
-		border: 2px solid #007bff;
+		border: 2px solid #0064b1;
 		padding: 10px 20px;
 		font-size: 1rem;
 		border-radius: 5px;
@@ -637,12 +637,14 @@
 	}
 
 	.filter-btn.active {
-		background-color: #007bff;
+		background-color: #0064b1;
 		color: #fff;
 	}
 
 	.filter-btn:hover {
 		background-color: #f0f8ff;
+		color: #0064b1;
+		border-color: #0064b1;
 	}
 
 	.portfolio-cards {
@@ -672,7 +674,7 @@
 
 	.portfolio-tag {
 		display: inline-block;
-		background-color: #007bff;
+		background-color: #0064b1;
 		color: #fff;
 		font-size: 0.8rem;
 		padding: 5px 10px;
@@ -694,7 +696,7 @@
 	}
 
 	.view-case-study {
-		color: #007bff;
+		color: #0064b1;
 		text-decoration: none;
 		font-size: 0.9rem;
 		font-weight: bold;
