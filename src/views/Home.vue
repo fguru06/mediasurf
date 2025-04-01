@@ -5,22 +5,45 @@
 			<!-- Navbar content -->
 		</nav>
 
-		<!-- Hero Section -->
-		<section id="home" class="hero">
-			<div class="hero-content">
-				<div class="hero-text-box">
-					<div class="hero-text">
-						<h1>Modern Web Design & eLearning Solutions</h1>
-						<p>
-							We help small and medium businesses create impactful digital
-							experiences and empower their teams through custom eLearning
-							programs.
-						</p>
-						<div class="hero-buttons">
-							<button class="btn-primary">Explore Services</button>
-							<button class="btn-secondary">Get in Touch</button>
+		<!-- Hero Section with Slider -->
+		<section class="hero">
+			<div class="slider">
+				<div
+					class="slider-images"
+					:style="{ transform: `translateX(-${currentSlide * 100}%)` }"
+				>
+					<!-- First Slide with Updated Text and Buttons -->
+					<div class="slide first-slide">
+						<img :src="sliderImages[0].src" :alt="sliderImages[0].alt" />
+						<div class="slide-text">
+							<h1>Modern Web Design & eLearning Solutions</h1>
+							<p>
+								We help small and medium businesses create impactful digital
+								experiences and empower their teams through custom eLearning
+								programs.
+							</p>
+							<div class="cta-buttons">
+								<button class="btn-primary">Explore Services</button>
+								<button class="btn-secondary">Get in Touch</button>
+							</div>
 						</div>
 					</div>
+
+					<!-- Other Slides -->
+					<div
+						class="slide"
+						v-for="(image, index) in sliderImages.slice(1)"
+						:key="index"
+					>
+						<img :src="image.src" :alt="image.alt" />
+					</div>
+				</div>
+				<div class="slider-controls">
+					<button @click="prevSlide">❮</button>
+					<button @click="togglePlayPause">
+						{{ isPlaying ? "❚❚" : "▶" }}
+					</button>
+					<button @click="nextSlide">❯</button>
 				</div>
 			</div>
 		</section>
@@ -253,7 +276,7 @@
 </template>
 
 <script setup>
-	import { ref, computed } from "vue";
+	import { ref, computed, onMounted, onUnmounted } from "vue";
 
 	defineProps({
 		darkMode: Boolean,
@@ -351,9 +374,68 @@
 			],
 		},
 	]);
+
+	// Slider data
+	const sliderImages = ref([
+		{
+			src: "src/assets/banner1.png", // Old image with text
+			alt: "Hero Banner",
+		},
+		{
+			src: "https://picsum.photos/1200/500?random=2", // Placeholder image 2
+			alt: "Placeholder Slide 2",
+		},
+		{
+			src: "https://picsum.photos/1200/500?random=3", // Placeholder image 3
+			alt: "Placeholder Slide 3",
+		},
+	]);
+
+	const currentSlide = ref(0);
+	const isPlaying = ref(true);
+	let sliderInterval;
+
+	const nextSlide = () => {
+		currentSlide.value = (currentSlide.value + 1) % sliderImages.value.length;
+	};
+
+	const prevSlide = () => {
+		currentSlide.value =
+			(currentSlide.value - 1 + sliderImages.value.length) %
+			sliderImages.value.length;
+	};
+
+	const togglePlayPause = () => {
+		isPlaying.value = !isPlaying.value;
+		if (isPlaying.value) {
+			startSlider();
+		} else {
+			stopSlider();
+		}
+	};
+
+	const startSlider = () => {
+		sliderInterval = setInterval(nextSlide, 3000);
+	};
+
+	const stopSlider = () => {
+		clearInterval(sliderInterval);
+	};
+
+	onMounted(() => {
+		startSlider();
+	});
+
+	onUnmounted(() => {
+		stopSlider();
+	});
 </script>
 
 <style scoped lang="scss">
+	:root {
+		--primary-color: #007bff; // Define your primary color here
+	}
+
 	.home-page {
 		font-family: Arial, sans-serif;
 		color: var(--text-color);
@@ -363,77 +445,121 @@
 	}
 
 	.hero {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 50px;
-		background: url("../assets/banner1.png") no-repeat center center;
-		background-size: cover;
-		color: var(--text-color);
-		border-radius: 10px;
 		position: relative;
-	}
+		height: 500px; // Adjust height for the slider
+		overflow: hidden;
 
-	.hero-content {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-	}
+		.slider {
+			position: relative;
+			height: 100%;
+			width: 100%;
 
-	.hero-text-box {
-		background-color: rgba(0, 0, 0, 0.6); // Transparent black background
-		padding: 20px;
-		border-radius: 10px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		/* max-width: 600px; */
-		text-align: center;
-	}
+			.slider-images {
+				display: flex;
+				transition: transform 0.5s ease-in-out;
+				height: 100%;
 
-	.hero-text h1 {
-		font-size: 2.5rem;
-		font-weight: bold;
-		margin-bottom: 20px;
-		color: #ffffff; // White text for better contrast
-	}
+				.slide {
+					min-width: 100%;
+					height: 100%;
 
-	.hero-text p {
-		font-size: 1rem;
-		margin-bottom: 20px;
-		color: #d1d1d1; // Light gray text for better readability
-	}
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
 
-	.hero-buttons {
-		display: flex;
-		gap: 15px;
-		justify-content: center;
-	}
+				.first-slide {
+					position: relative;
 
-	.btn-primary {
-		background-color: var(--primary-color);
-		color: #fff;
-		border: none;
-		padding: 10px 20px;
-		font-size: 1rem;
-		border-radius: 5px;
-		cursor: pointer;
+					.slide-text {
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						text-align: center;
+						color: #fff;
+						background-color: rgba(
+							0,
+							0,
+							0,
+							0.5
+						); // Transparent black background
+						padding: 20px;
+						border-radius: 10px;
+						width: 80%;
 
-		&:hover {
-			background-color: var(--primary-color-hover);
-		}
-	}
+						h1 {
+							font-size: 2.5rem;
+							font-weight: bold;
+							margin-bottom: 15px;
+						}
 
-	.btn-secondary {
-		background-color: transparent;
-		color: var(--primary-color);
-		border: 2px solid var(--primary-color);
-		padding: 10px 20px;
-		font-size: 1rem;
-		border-radius: 5px;
-		cursor: pointer;
+						p {
+							font-size: 1rem;
+							margin-bottom: 20px;
+						}
 
-		&:hover {
-			background-color: rgba(0, 123, 255, 0.1);
+						.cta-buttons {
+							display: flex;
+							justify-content: center;
+							gap: 15px;
+
+							.btn-primary {
+								background-color: #007bff;
+								color: #fff;
+								border: none;
+								padding: 10px 20px;
+								font-size: 1rem;
+								border-radius: 5px;
+								cursor: pointer;
+
+								&:hover {
+									background-color: #0056b3;
+								}
+							}
+
+							.btn-secondary {
+								background-color: transparent;
+								color: #fff;
+								border: 2px solid #fff;
+								padding: 10px 20px;
+								font-size: 1rem;
+								border-radius: 5px;
+								cursor: pointer;
+
+								&:hover {
+									background-color: rgba(255, 255, 255, 0.1);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.slider-controls {
+				position: absolute;
+				bottom: 20px;
+				left: 50%;
+				transform: translateX(-50%);
+				display: flex;
+				gap: 10px;
+
+				button {
+					background-color: rgba(0, 0, 0, 0.5);
+					color: #fff;
+					border: none;
+					padding: 10px 15px;
+					cursor: pointer;
+					font-size: 1.2rem;
+					border-radius: 5px;
+
+					&:hover {
+						background-color: rgba(0, 0, 0, 0.8);
+					}
+				}
+			}
 		}
 	}
 
