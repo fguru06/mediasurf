@@ -231,7 +231,7 @@
 		<footer id="contact" class="footer">
 			<div class="footer-content">
 				<div class="footer-column">
-					<h3>Nexus</h3>
+					<h3>MediaSurf</h3>
 					<p>
 						Transforming businesses through innovative web design and impactful
 						eLearning solutions.
@@ -265,10 +265,9 @@
 				</div>
 				<div class="footer-column">
 					<h3>Contact</h3>
-					<p>123 Business Avenue</p>
-					<p>San Francisco, CA 94107</p>
-					<p>Email: info@nexuslearn.com</p>
-					<p>Phone: (415) 555-0123</p>
+					<p>Kitchener, ON N2R 0J9</p>
+					<p>Email: info@mediasurf.ca</p>
+					<p>Phone: (647) 849-9656</p>
 				</div>
 			</div>
 		</footer>
@@ -277,6 +276,7 @@
 
 <script setup>
 	import { ref, computed, onMounted, onUnmounted } from "vue";
+	import banner1 from "../assets/banner1.png"; // Ensure this path is correct
 
 	defineProps({
 		darkMode: Boolean,
@@ -335,11 +335,11 @@
 	const teamMembers = ref([
 		{
 			id: 1,
-			name: "David Miller",
+			name: "Fareed Hassan",
 			role: "Founder & CEO",
 			description:
 				"With over 15 years in digital transformation, David leads our vision and strategy.",
-			image: "../assets/team-david.jpg",
+			image: new URL("../assets/team1.jpg", import.meta.url).href,
 			socials: [
 				{
 					platform: "LinkedIn",
@@ -359,7 +359,7 @@
 			role: "Lead UX Designer",
 			description:
 				"Jennifer crafts intuitive user experiences that balance aesthetics with functionality.",
-			image: "../assets/team-jennifer.jpg",
+			image: new URL("../assets/team2.jpg", import.meta.url).href,
 			socials: [
 				{
 					platform: "LinkedIn",
@@ -378,7 +378,7 @@
 	// Slider data
 	const sliderImages = ref([
 		{
-			src: "src/assets/banner1.png", // Old image with text
+			src: banner1, // Use the imported image
 			alt: "Hero Banner",
 		},
 		{
