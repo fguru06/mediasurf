@@ -335,7 +335,7 @@
 	const teamMembers = ref([
 		{
 			id: 1,
-			name: "Fareed Hassan",
+			name: "David Smith",
 			role: "Founder & CEO",
 			description:
 				"With over 15 years in digital transformation, David leads our vision and strategy.",
@@ -415,7 +415,7 @@
 	};
 
 	const startSlider = () => {
-		sliderInterval = setInterval(nextSlide, 3000);
+		sliderInterval = setInterval(nextSlide, 5000); // Increased interval duration to 5000ms (5 seconds)
 	};
 
 	const stopSlider = () => {
