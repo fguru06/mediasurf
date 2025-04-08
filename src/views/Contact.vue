@@ -60,15 +60,15 @@
 			<div class="contact-info">
 				<div class="info-item">
 					<i class="fas fa-map-marker-alt"></i>
-					<p>123 Business Avenue<br />Suite 200<br />San Francisco, CA 94107</p>
+					<p>Kitchener, Ontario<br />Canada</p>
 				</div>
 				<div class="info-item">
 					<i class="fas fa-envelope"></i>
-					<p>info@nexuslearn.com</p>
+					<p>info@mediasurf.ca</p>
 				</div>
 				<div class="info-item">
 					<i class="fas fa-phone"></i>
-					<p>(415) 555-0123</p>
+					<p>(647) 849-9656</p>
 				</div>
 			</div>
 		</div>
